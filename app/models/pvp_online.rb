@@ -1,0 +1,2 @@
+class PvpOnline < ApplicationRecord
+end
