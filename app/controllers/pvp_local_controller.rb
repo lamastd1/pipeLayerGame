@@ -1,4 +1,4 @@
-class PvpController < ApplicationController
+class PvpLocalController < ApplicationController
 
   def index
   end

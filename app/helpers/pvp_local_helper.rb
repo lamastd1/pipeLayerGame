@@ -1,0 +1,2 @@
+module PvpLocalHelper
+end

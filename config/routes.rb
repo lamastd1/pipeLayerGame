@@ -1,13 +1,10 @@
 Rails.application.routes.draw do
-  get 'pvp_in_person_horizontals/index'
   root 'home#index'
   get 'home/about'
-  get 'pvp', to:'pvp#index'
 
-  post '/process_button_click', to: 'pvp#process_button_click'
-  post '/process_button_click_two', to: 'pvp#process_button_click_two'
-
-  # get 'pvpInPersonHorizontals', to:'pvpInPersonHorizontals#index'
+  get 'local', to:'pvp_local#index'
+  post '/process_button_click', to: 'pvp_local#process_button_click'
+  post '/process_button_click_two', to: 'pvp_local#process_button_click_two'
 
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

@@ -1,2 +1,0 @@
-class PvpInPersonHorizontal < ApplicationRecord
-end

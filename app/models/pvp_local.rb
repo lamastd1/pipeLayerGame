@@ -1,0 +1,2 @@
+class PvpLocal < ApplicationRecord
+end
