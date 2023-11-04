@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'pvp_bot/index'
   get 'pvp_online/index'
   root 'home#index'
   get 'home/about'
@@ -10,6 +11,11 @@ Rails.application.routes.draw do
   get 'online', to:'pvp_online#index'
   post '/process_button_click', to: 'pvp_online#process_button_click'
   post '/process_button_click_two', to: 'pvp_online#process_button_click_two'
+
+  get 'bot', to:'pvp_bot#index'
+  post '/process_button_click', to: 'pvp_bot#process_button_click'
+  post '/process_button_click_two', to: 'pvp_bot#process_button_click_two'
+
 
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

@@ -1,0 +1,2 @@
+class PvpBot < ApplicationRecord
+end
