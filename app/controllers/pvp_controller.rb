@@ -3,11 +3,11 @@ class PvpController < ApplicationController
   def index
   end
 
-  def process_button_click
+  def button_one
     print("yay!")
   end
 
-  def process_button_click_two
+  def button_two
     print("oh yeahh")
   end
   
