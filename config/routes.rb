@@ -4,8 +4,8 @@ Rails.application.routes.draw do
   get 'home/about'
   get 'pvp', to:'pvp#index'
 
-  post '/button_one', to: 'pvp#button_one'
-  post '/button_two', to: 'pvp#button_two'
+  post '/process_button_click', to: 'pvp#process_button_click'
+  post '/process_button_click_two', to: 'pvp#process_button_click_two'
 
   # get 'pvpInPersonHorizontals', to:'pvpInPersonHorizontals#index'
 
