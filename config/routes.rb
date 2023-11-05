@@ -16,7 +16,7 @@ Rails.application.routes.draw do
   post '/process_button_click', to: 'pvp_bot#process_button_click'
   post '/process_button_click_two', to: 'pvp_bot#process_button_click_two'
 
-
+  post '/pvp_local_action', to: 'pvp_local#process_button'
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

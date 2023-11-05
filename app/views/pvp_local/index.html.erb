@@ -1,8 +1,69 @@
-<p> hello <p>
-<%= form_tag(process_button_click_path) do %>
-  <%= submit_tag('Click Me') %>
-<% end %>
+<%= stylesheet_link_tag 'local.css' %>
 
-<%= form_tag(process_button_click_two_path) do %>
-  <%= submit_tag('Click Me Here actually') %>
-<% end %>
+<div class="grid-container">
+  <div class="grid-item">
+    <%= form_tag(pvp_local_action_path) do %>
+      <%= button_tag('Button 1', name: 'red_button', value: 'button_1', class: 'button-1') %>
+    <% end %>
+  </div>
+  <div class="grid-item">
+  <%= form_tag(pvp_local_action_path) do %>
+      <%= button_tag('Button 2', name: 'blue_button', value: 'button_2', class: 'button-2') %>
+    <% end %>
+  </div>
+  <div class="grid-item">
+    <%= form_tag(pvp_local_action_path) do %>
+      <%= button_tag('Button 3', name: 'red_button', value: 'button_3', class: 'button-1') %>
+    <% end %>
+  </div>
+  <div class="grid-item">
+  <%= form_tag(pvp_local_action_path) do %>
+      <%= button_tag('Button 4', name: 'blue_button', value: 'button_4', class: 'button-2') %>
+    <% end %>
+  </div>
+  <div class="grid-item">5</div>
+  <div class="grid-item">6</div>  
+  <div class="grid-item">7</div>
+  <div class="grid-item">8</div>
+  <div class="grid-item">9</div>  
+</div>
+
+
+<script>
+  // JavaScript code in your view or asset file
+  // const form1 = document.querySelector('.form-1');
+  // const form2 = document.querySelector('.form-2');
+  // const button1 = document.querySelector('.button-1');
+  // const button2 = document.querySelector('.button-2');
+  // const button3 = document.querySelector('.button-3');
+  // const button4 = document.querySelector('.button-4');
+
+  const redButtons = Array.from(document.querySelectorAll('.button-1'));
+  const blueButtons = Array.from(document.querySelectorAll('.button-2'));
+
+  redButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      redButtons.forEach(button => {
+        button.style.display = 'none';
+      })
+      blueButtons.forEach(button => {
+        button.style.display = 'block';
+      })
+    });
+  })
+
+  blueButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      blueButtons.forEach(button => {
+        button.style.display = 'none';
+      })
+      redButtons.forEach(button => {
+        button.style.display = 'block';
+      })
+    });
+  })
+</script>
+
+
+
+
