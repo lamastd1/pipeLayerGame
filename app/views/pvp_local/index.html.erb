@@ -63,12 +63,24 @@
     redButtons.forEach(button => {
       button.addEventListener('click', () => {
 
+        button.disabled = true;
+        button.classList.add('used-red-space');
+        button.classList.remove('red-button');
+
         redButtons.forEach(button => {
-          button.style.display = 'none';
+          if (!button.disabled) {
+            button.style.display = 'none';
+          }
         })
         blueButtons.forEach(button => {
-          button.style.display = 'block';
+          if (!button.disabled) {
+            button.style.display = 'block';
+          }
         })
+        
+        blueButtons[redButtons.indexOf(button)].disabled = true;
+        blueButtons[redButtons.indexOf(button)].classList.add('wasted-space');
+        blueButtons[redButtons.indexOf(button)].classList.remove('blue-button');
 
       });
       
@@ -77,12 +89,25 @@
     blueButtons.forEach(button => {
       button.addEventListener('click', () => {
 
+        button.disabled = true;
+        button.classList.remove('blue-button');
+        button.classList.add('used-blue-space');
+
         blueButtons.forEach(button => {
-          button.style.display = 'none';
+          if (!button.disabled) {
+            button.style.display = 'none';
+          }
         })
         redButtons.forEach(button => {
-          button.style.display = 'block';
+          if (!button.disabled) {
+            button.style.display = 'block';
+          }
         })
+
+        redButtons[blueButtons.indexOf(button)].disabled = true;
+        redButtons[blueButtons.indexOf(button)].classList.remove('red-button');
+        redButtons[blueButtons.indexOf(button)].classList.add('wasted-space');
+
       });
     })
   </script>
