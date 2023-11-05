@@ -1,32 +1,43 @@
 .red-button {
   background-color: red;
-  padding: 10px;
 }
 
-.button-2 {
+.blue-button {
   background-color: blue;
+  padding: 10px;
   display: none;
 }
 
-.button-3 {
+.redCircles {
+  border-radius: 50%;
   background-color: red;
-  padding: 10px;
+  width: 2vw;
+  height: 2vh;
+  position: absolute;
 }
 
-.button-4 {
+.blueCircles {
+  border-radius: 50%;
   background-color: blue;
-  display: none;
+  width: 2vw;
+  height: 2vh;
+  position: absolute;
 }
 
-.grid-container {
-  display: inline-grid;
-  grid-template-columns: auto auto auto auto auto auto;
-  background-color: #2196F3;
-  padding: 10px;
+.resizable-button1 {
+  top:22vh;
+  left:20vw;
+  position:absolute;
+  width: 2vw;
+  height: 8vh;
+ 
 }
-.grid-item {
-  background-color: rgba(255, 255, 255, 0.8);
-  padding: 20px;
-  font-size: 30px;
-  text-align: center;
+
+.resizable-button2 {
+  top:25vh;
+  left:17vw;
+  position:absolute;
+  width: 8vw;
+  height: 2vh;
+ 
 }

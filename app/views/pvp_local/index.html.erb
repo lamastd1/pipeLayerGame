@@ -1,50 +1,77 @@
-<%= stylesheet_link_tag 'local.css' %>
+<!DOCTYPE html>
+<html lang="en">
+  <%= stylesheet_link_tag 'local.css' %>
 
-<div class="grid-container">
-  <% (1..42).each do |row| %> 
-    <div class="grid-item">
-      <%= form_tag(pvp_local_action_path) do %>
-        <%= button_tag("Button #{row}", name: 'red_button', value: "button_#{row}", class: 'red-button') %>
+  <h1 style="text-align: center"> PIPELAYER </h1>
+  <div>
+    <% (1..7).each do |height| %>
+      <% (1..6).each do |width| %>
+        <% @div_id = "circle_#{((height - 1) * 7) + width}" %>
+        <% @div_style = "left: #{22.5 + ((width - 1) * 10)}vw; top: #{20 + ((height - 1) * 10)}vh;" %>
+        <div id="<%= @div_id %>" class="redCircles" style="<%= @div_style %>"></div>
       <% end %>
-    </div>
-  <% end %>
-</div>
+    <% end %>
+  </div>
+
+  <div>
+    <% (1..6).each do |height| %>
+      <% (1..7).each do |width| %>
+        <% @div_id = "circle_#{((height - 1) * 6) + width}" %>
+        <% @div_style = "left: #{17.5 + ((width - 1) * 10)}vw; top: #{25 + ((height - 1) * 10)}vh;" %>
+        <div id="<%= @div_id %>" class="blueCircles" style="<%= @div_style %>"></div>
+      <% end %>
+    <% end %>
+  </div>
+
+  <div>
+    <% (1..6).each do |height| %>
+      <% (1..6).each do |width| %>
+        <% @button_value = "button_#{((height - 1) * 6) + width}" %>
+        <% @button_style = "position: absolute; left: #{22.5 + ((width - 1) * 10)}vw; top: #{22 + ((height - 1) * 10)}vh; width: 1vw;
+  height: 8vh;" %>
+        <div>
+          <%= form_tag(pvp_local_action_path) do %>
+            <%= button_tag "", name: 'red_button', value: @button_value, style: @button_style %>
+          <% end %>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
 
 
-<script>
-  // JavaScript code in your view or asset file
-  // const form1 = document.querySelector('.form-1');
-  // const form2 = document.querySelector('.form-2');
-  // const button1 = document.querySelector('.button-1');
-  // const button2 = document.querySelector('.button-2');
-  // const button3 = document.querySelector('.button-3');
-  // const button4 = document.querySelector('.button-4');
+  <script>
 
-  const redButtons = Array.from(document.querySelectorAll('.button-1'));
-  const blueButtons = Array.from(document.querySelectorAll('.button-2'));
+    const redButtons = Array.from(document.querySelectorAll('.red-button'));
+    const blueButtons = Array.from(document.querySelectorAll('.blue-button'));
 
-  redButtons.forEach(button => {
-    button.addEventListener('click', () => {
-      redButtons.forEach(button => {
-        button.style.display = 'none';
-      })
-      blueButtons.forEach(button => {
-        button.style.display = 'block';
-      })
-    });
-  })
+    redButtons.forEach(button => {
+      button.addEventListener('click', () => {
 
-  blueButtons.forEach(button => {
-    button.addEventListener('click', () => {
-      blueButtons.forEach(button => {
-        button.style.display = 'none';
-      })
-      redButtons.forEach(button => {
-        button.style.display = 'block';
-      })
-    });
-  })
-</script>
+        redButtons.forEach(button => {
+          button.style.display = 'none';
+        })
+        blueButtons.forEach(button => {
+          button.style.display = 'block';
+        })
+
+      });
+      
+    })
+
+    blueButtons.forEach(button => {
+      button.addEventListener('click', () => {
+
+        blueButtons.forEach(button => {
+          button.style.display = 'none';
+        })
+        redButtons.forEach(button => {
+          button.style.display = 'block';
+        })
+      });
+    })
+  </script>
+
+</html>
 
 
 
