@@ -31,12 +31,28 @@
   height: 8vh;" %>
         <div>
           <%= form_tag(pvp_local_action_path) do %>
-            <%= button_tag "", name: 'red_button', value: @button_value, style: @button_style %>
+            <%= button_tag "", name: 'red_button', class: 'red-button', value: @button_value, style: @button_style %>
           <% end %>
         </div>
       <% end %>
     <% end %>
   </div>
+
+  <div>
+    <% (1..6).each do |height| %>
+      <% (1..6).each do |width| %>
+        <% @button_value = "button_#{((height - 1) * 6) + width}" %>
+        <% @button_style = "position: absolute; left: #{19.5 + ((width - 1) * 10)}vw; top: #{25 + ((height - 1) * 10)}vh; width: 8vw;
+  height: 2vh;" %>
+        <div>
+          <%= form_tag(pvp_local_action_path) do %>
+            <%= button_tag "", name: 'blue_button', class:'blue-button', value: @button_value, style: @button_style %>
+          <% end %>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+
 
 
   <script>
