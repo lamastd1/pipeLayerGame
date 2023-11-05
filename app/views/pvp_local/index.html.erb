@@ -1,31 +1,13 @@
 <%= stylesheet_link_tag 'local.css' %>
 
 <div class="grid-container">
-  <div class="grid-item">
-    <%= form_tag(pvp_local_action_path) do %>
-      <%= button_tag('Button 1', name: 'red_button', value: 'button_1', class: 'button-1') %>
-    <% end %>
-  </div>
-  <div class="grid-item">
-  <%= form_tag(pvp_local_action_path) do %>
-      <%= button_tag('Button 2', name: 'blue_button', value: 'button_2', class: 'button-2') %>
-    <% end %>
-  </div>
-  <div class="grid-item">
-    <%= form_tag(pvp_local_action_path) do %>
-      <%= button_tag('Button 3', name: 'red_button', value: 'button_3', class: 'button-1') %>
-    <% end %>
-  </div>
-  <div class="grid-item">
-  <%= form_tag(pvp_local_action_path) do %>
-      <%= button_tag('Button 4', name: 'blue_button', value: 'button_4', class: 'button-2') %>
-    <% end %>
-  </div>
-  <div class="grid-item">5</div>
-  <div class="grid-item">6</div>  
-  <div class="grid-item">7</div>
-  <div class="grid-item">8</div>
-  <div class="grid-item">9</div>  
+  <% (1..42).each do |row| %> 
+    <div class="grid-item">
+      <%= form_tag(pvp_local_action_path) do %>
+        <%= button_tag("Button #{row}", name: 'red_button', value: "button_#{row}", class: 'red-button') %>
+      <% end %>
+    </div>
+  <% end %>
 </div>
 
 

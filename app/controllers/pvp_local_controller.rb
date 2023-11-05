@@ -12,19 +12,12 @@ class PvpLocalController < ApplicationController
   end
 
   def process_button
-    case params[:red_button]
-    when 'button_1'
-      print()
-      print()
-      print("BUTTON 1!!")
-      print()
-      print()
-    when 'button_3'
-      print()
-      print()
-      print("BUTTON 3!!")
-      print()
-      print()
+    # print(params[:red_button])
+    (1..42).each do |i|
+      if params[:red_button] == "button_#{i}"
+        print("button_#{i}")
+        print("\n")
+      end 
     end
 
     case params[:blue_button]
