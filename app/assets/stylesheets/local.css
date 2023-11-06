@@ -24,12 +24,14 @@
   background-color: red;
   display: block;
   border: none;
+  opacity: 1;
 }
 
 .used-blue-space {
   background-color: blue;
   display: block;
   border: none;
+  opacity: 1;
 }
 
 .wasted-space {
@@ -53,22 +55,4 @@
   width: 2vw;
   height: 2vh;
   position: absolute;
-}
-
-.resizable-button1 {
-  top:22vh;
-  left:20vw;
-  position:absolute;
-  width: 2vw;
-  height: 8vh;
- 
-}
-
-.resizable-button2 {
-  top:25vh;
-  left:17vw;
-  position:absolute;
-  width: 8vw;
-  height: 2vh;
- 
 }

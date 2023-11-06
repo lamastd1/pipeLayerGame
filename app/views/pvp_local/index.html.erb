@@ -1,4 +1,6 @@
-<!DOCTYPE html>
+<head>
+<meta name="csrf-token" content="<%= form_authenticity_token %>" />
+</head>
 <html lang="en">
   <%= stylesheet_link_tag 'local.css' %>
 
@@ -31,7 +33,7 @@
   height: 8vh;" %>
         <div>
           <%= form_tag(pvp_local_action_path) do %>
-            <%= button_tag "", name: 'red_button', class: 'red-button', value: @button_value, style: @button_style %>
+            <%= button_tag "", name: 'red_button', class: 'red-button', value: @button_value, style: @button_style, disabled: @disable_button %>
           <% end %>
         </div>
       <% end %>
@@ -41,12 +43,12 @@
   <div>
     <% (1..6).each do |height| %>
       <% (1..6).each do |width| %>
-        <% @button_value = "button_#{((height - 1) * 6) + width}" %>
+        <% @button_value = "button_#{((height + 6 - 1) * 6) + width}" %>
         <% @button_style = "position: absolute; left: #{19.5 + ((width - 1) * 10)}vw; top: #{25 + ((height - 1) * 10)}vh; width: 8vw;
   height: 2vh;" %>
         <div>
           <%= form_tag(pvp_local_action_path) do %>
-            <%= button_tag "", name: 'blue_button', class:'blue-button', value: @button_value, style: @button_style %>
+            <%= button_tag "", name: 'blue_button', class:'blue-button', value: @button_value, style: @button_style, disabled: @disable_button %>
           <% end %>
         </div>
       <% end %>
@@ -63,24 +65,26 @@
     redButtons.forEach(button => {
       button.addEventListener('click', () => {
 
-        button.disabled = true;
+        button.disabled = true
         button.classList.add('used-red-space');
         button.classList.remove('red-button');
 
-        redButtons.forEach(button => {
-          if (!button.disabled) {
-            button.style.display = 'none';
+        redButtons.forEach(redButton => {
+          if (!redButton.disabled && redButton != button) {
+            redButton.style.display = 'none';
           }
         })
-        blueButtons.forEach(button => {
-          if (!button.disabled) {
-            button.style.display = 'block';
+        blueButtons.forEach(blueButton => {
+          if (!blueButton.disabled) {
+            blueButton.style.display = 'block';
           }
         })
-        
+
         blueButtons[redButtons.indexOf(button)].disabled = true;
         blueButtons[redButtons.indexOf(button)].classList.add('wasted-space');
         blueButtons[redButtons.indexOf(button)].classList.remove('blue-button');
+
+        sendDataToController(button.value)
 
       });
       
@@ -93,9 +97,9 @@
         button.classList.remove('blue-button');
         button.classList.add('used-blue-space');
 
-        blueButtons.forEach(button => {
-          if (!button.disabled) {
-            button.style.display = 'none';
+        blueButtons.forEach(blueButton => {
+          if (!blueButton.disabled && blueButton != button) {
+            blueButton.style.display = 'none';
           }
         })
         redButtons.forEach(button => {
@@ -108,8 +112,35 @@
         redButtons[blueButtons.indexOf(button)].classList.remove('red-button');
         redButtons[blueButtons.indexOf(button)].classList.add('wasted-space');
 
+        sendDataToController(button.value)
       });
     })
+
+    function sendDataToController(value) {
+      const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+      const headers = {
+        'Content-Type': 'application/json',
+        'X-CSRF-Token': csrfToken,
+      };
+
+      fetch('/action', {
+        method: 'POST',
+        headers: headers,
+        body: JSON.stringify({ val: value }),
+      })
+        .then(response => response.json())
+        .then(data => {
+          // Handle the response from the controller
+          console.log(data);
+        })
+        .catch(error => {
+          // Handle any errors
+          console.error('Error:', error);
+        });
+    }
+
+
   </script>
 
 </html>
