@@ -45,7 +45,7 @@ class PvpLocalController < ApplicationController
     end
 
     # Receive and process the array data here
-    received_val = params[:val]
+    received_val = (params[:val][-2..-1]).to_i
     
     # Perform any necessary actions with the array
     @pvp_local_instance.add_used_space(received_val)
