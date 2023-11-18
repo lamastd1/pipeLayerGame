@@ -1,17 +1,14 @@
 class PvpLocalController < ApplicationController
 
-  def create_model_instance 
-    @pvp_local_instance = PvpLocal.new
-    session[:pvp_local_instance] = @pvp_local_instance.to_json
-  end
+  def delete_all_rows
+    # Delete all rows from the table
+    PvpLocal.delete_all
 
-  def destroy_model_instance
-    session.delete(:pvp_local_instance)
-    create_model_instance
+    # Optionally, you can redirect or render a response
+    # redirect_to root_path, notice: 'All rows deleted successfully'
   end
-
   def index
-    destroy_model_instance
+    delete_all_rows
   end
 
   def process_button
@@ -35,24 +32,20 @@ class PvpLocalController < ApplicationController
 
   def action
 
-    serialized_instance = session[:pvp_local_instance]
-
-    if serialized_instance
-      @pvp_local_instance = PvpLocal.new
-      @pvp_local_instance.set_attributes(JSON.parse(serialized_instance))
-    else 
-      print("error")
-    end
-
     # Receive and process the array data here
-    received_val = (params[:val][-2..-1]).to_i
-    
+    used_val = params[:val][7..-1]
+
+    print("USED VAL: \n")
+    print(used_val)
+
     # Perform any necessary actions with the array
-    @pvp_local_instance.add_used_space(received_val)
+    your_instance = PvpLocal.create(button_no: used_val, is_visited: false)
 
-    @pvp_local_instance.print_used_spaces
-    session[:pvp_local_instance] = @pvp_local_instance.to_json
+    all_records = PvpLocal.all
 
+    all_records.each do |record|
+      puts record.attributes.inspect
+    end
     
     # Respond to the AJAX request
     respond_to do |format|

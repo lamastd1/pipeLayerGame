@@ -1,30 +1,32 @@
-class PvpLocal
+class PvpLocal < ApplicationRecord
+  self.table_name = 'pvp_local'
+  self.primary_key = 'button_no'
 
-  # include ActiveModel::Model
+  # Other model configurations, associations, validations, etc.
 
-  attr_accessor :used_spaces, :wasted_spaces
-
-  def initialize
-    super
-    self.used_spaces = []
-    self.wasted_spaces = []
+  # Example method to check if a record is visited
+  def visited?
+    is_visited
   end
 
-  def add_used_space(value)
-    self.used_spaces << value
+  # Example method to mark a record as visited
+  def mark_visited!
+    update(is_visited: true)
   end
 
-  def add_wasted_space(value)
-    self.wasted_spaces << value
+  # Example method to find records with specific conditions
+  def self.find_visited_records
+    where(is_visited: true)
   end
 
-  def set_attributes(attributes)
-    self.used_spaces = attributes['used_spaces']
-    self.wasted_spaces = attributes['wasted_spaces']
-  end
+  def add_used_space(value, low, high)
 
-  def print_used_spaces
-    puts self.used_spaces
-  end
+    if self.used_spaces.size == 0
+      return 
+    end
 
+    if (value > self.used_spaces[(high - low) / 2])
+      self.add_used_space(value, ((high - low) / 2), high)
+    end
+  end 
 end
