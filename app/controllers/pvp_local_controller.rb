@@ -39,14 +39,10 @@ class PvpLocalController < ApplicationController
     print(used_val)
 
     # Perform any necessary actions with the array
-    your_instance = PvpLocal.create(button_no: used_val, is_visited: false)
+    current_move = PvpLocal.create(button_no: used_val, is_visited: false)
 
-    all_records = PvpLocal.all
-
-    all_records.each do |record|
-      puts record.attributes.inspect
-    end
-    
+    current_move.determine_winner_red
+  
     # Respond to the AJAX request
     respond_to do |format|
       format.json { render json: { message: 'Data received and processed' } }

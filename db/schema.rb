@@ -10,12 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_11_18_032625) do
+ActiveRecord::Schema[7.1].define(version: 2023_11_18_220440) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "pvp_local", primary_key: "button_no", id: :integer, default: nil, force: :cascade do |t|
     t.boolean "is_visited", default: false
+    t.boolean "up", default: false
+    t.boolean "down", default: false
+    t.boolean "upright", default: false
+    t.boolean "upleft", default: false
+    t.boolean "downright", default: false
+    t.boolean "downleft", default: false
+    t.boolean "right", default: false
+    t.boolean "left", default: false
   end
 
 end
