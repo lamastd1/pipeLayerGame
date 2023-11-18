@@ -30,6 +30,21 @@ class PvpLocal < ApplicationRecord
     end
   end 
 
+  def find_piece(color, direction_col, direction_int, board_stack)
+
+    matching_record = color.select do |record| 
+      record[:button_no] == board_stack.last.button_no + direction_int && record[direction_col] == false
+    end
+    if matching_record.any?
+      matching_record[0][direction_col] = true
+      board_stack << matching_record[0]
+      return true
+    else
+      return false
+    end
+  end
+
+
   def determine_winner_red
 
     current_red = []
@@ -57,7 +72,7 @@ class PvpLocal < ApplicationRecord
     end
     
     count = 0
-    while !board_stack.empty? && count < 10
+    while !board_stack.empty? && count < 50
       # print("BOARD STACK LAST: \n")
       board_stack.each do |num|
         puts num.attributes
@@ -73,47 +88,35 @@ class PvpLocal < ApplicationRecord
       
       # puts board_stack.last.button_no
       if board_stack.last.button_no < 7
-        matching_record = current_red.select do |record| 
-          record[:button_no] == board_stack.last.button_no + 6 && record[:down] == false
-        end
-        if matching_record.any?
-          matching_record[0].down = true
-          board_stack << matching_record[0]
+        if find_piece(current_red, :down, 6, board_stack) == false
+          if find_piece(current_red, :downright, 36, board_stack) == false
+            if find_piece(current_red, :downleft, 35, board_stack) == false
+              board_stack.pop
+            else 
+              next
+            end
+          else
+            next
+          end
         else
+          next
+        end
+      elsif board_stack.last.button_no < 31
+        # find_piece(current_red, :down, 6, board_stack)
+        if find_piece(current_red, :up, -6, board_stack) == false
           board_stack.pop
         end
-      else
-        matching_record = current_red.select do |record| 
-          record[:button_no] == board_stack.last.button_no + 6 && record[:is_visited] == false
-        end
-        if matching_record.any?
-          matching_record[0].up = true
-          board_stack << matching_record[0]
-        else
-          board_stack.pop
-        end
+        # find_piece(current_red, :downright, 36, board_stack)
+        # find_piece(current_red, :downleft, 35, board_stack)
+        # find_piece(current_red, :upright, 28, board_stack)
+        # find_piece(current_red, :upleft, 27, board_stack)
+      else 
+        find_piece(current_red, :up, -6, board_stack)
+        find_piece(current_red, :upright, 28, board_stack)
+        find_piece(current_red, :upleft, 27, board_stack)
       end
-
-      #   matching_record = current_red.select do |record| 
-      #     record[:button_no] == board_stack.last.button_no - 1  && record[:is_visited] == false
-      #   end
-      #   if matching_record.any?
-      #     # print("MATCHING RECORD \n")
-      #     # print(matching_record[0].attributes)
-      #     # print("\n")
-      #     matching_record[0].is_visited = true
-      #     board_stack << matching_record[0]
-      #     puts "At least one record has button_no equal to 10."
-      #   else
-      #     board_stack.pop
-      #     puts "No record has button_no equal to 10."
-      #   end
-      # end
-      # if board_stack.empty?
-      #   count = 1000
-      # end
       count = count + 1
-      if count == 10
+      if count == 50
         puts "COUNT EXCEEDED"
       end
     end
