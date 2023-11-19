@@ -81,21 +81,15 @@ class PvpLocal < ApplicationRecord
       if board_stack.last[:button_no] > 30 && board_stack.last[:button_no] < 37
         return true 
       end
-      # print("BOARD STACK LAST: \n")
-      board_stack.each do |num|
-        puts num.attributes
-      end
-      puts
-      # print("CURRENT RED: \n")
-      # current_red.each do |num|
-      #   puts num.attributes
-      # end
-      # print("COUNT \n")
-      # print(count)
-      # print("\n")
-      
-      # puts board_stack.last.button_no
-      if board_stack.last.button_no < 7
+      if board_stack.last.button_no < 37 && board_stack.last.button_no % 6 == 1
+        find_piece(current_red, :down, 6, board_stack) == false ? 
+          (find_piece(current_red, :downright, 36, board_stack) == false ? board_stack.pop : next)
+        : next
+      elsif board_stack.last.button_no < 37 && board_stack.last.button_no % 6 == 0
+        find_piece(current_red, :down, 6, board_stack) == false ? 
+          (find_piece(current_red, :downleft, 35, board_stack) == false ? board_stack.pop : next)
+        : next
+      elsif board_stack.last.button_no < 6
         find_piece(current_red, :down, 6, board_stack) == false ? 
           (find_piece(current_red, :downright, 36, board_stack) == false ? 
             (find_piece(current_red, :downleft, 35, board_stack) == false ? board_stack.pop : next) 
@@ -159,22 +153,5 @@ class PvpLocal < ApplicationRecord
       end
     end
     return false
-      # if ((board_stack.last + 1).in?(current_red)) && !((board_stack.last + 1).in?(board_stack)) 
-      #   board_stack << board_stack.last + 1
-      # elsif (board_stack.last + 6).in?(current_red)
-      #   board_stack << board_stack.last + 6
-      # elsif (board_stack.last - 1).in?(current_red)
-      #   board_stack << board_stack.last - 1
-      # elsif(board_stack.last - 6).in?(current_red)
-      #   board_stack << board_stack.last - 6
-      # else
-      #   print("does anything happen here? \n") 
-      #   board_stack.pop
-      # end
-      # count = count + 1
-      # print("BOARD STACK \n")
-      # board_stack.each do |num|
-      #   puts num
-      # end
   end
 end

@@ -28,11 +28,11 @@
   <div>
     <% (1..6).each do |height| %>
       <% (1..6).each do |width| %>
-        <% @button_value = "button_#{((height - 1) * 6) + width}" %>
+        <% @button_value = "button_#{((height - 1) * 6) + width - 1}" %>
         <% @button_style = "position: absolute; left: #{23 + ((width - 1) * 10)}vw; top: #{22 + ((height - 1) * 10)}vh; width: 1vw; height: 8vh;" %>
         <div>
           <%= form_tag(pvp_local_action_path) do %>
-            <%= button_tag "", name: 'red_button', class: 'red-button', value: @button_value, style: @button_style, disabled: @disable_button %>
+            <%= button_tag @button_value, name: 'red_button', class: 'red-button', value: @button_value, style: @button_style, disabled: @disable_button %>
           <% end %>
         </div>
       <% end %>
@@ -42,7 +42,7 @@
   <div>
     <% (1..5).each do |height| %>
       <% (1..5).each do |width| %>
-        <% @button_value = "button_#{((height + 6 - 1) * 6) + width}" %>
+        <% @button_value = "button_#{((height + 6 - 1) * 6) + width - height}" %>
         <% @button_style = "position: absolute; left: #{24.5 + ((width - 1) * 10)}vw; top: #{30 + ((height - 1) * 10)}vh; width: 8vw; height: 2vh;" %>
         <div>
           <%= form_tag(pvp_local_action_path) do %>
@@ -56,7 +56,8 @@
   <div>
     <% (1..6).each do |height| %>
       <% (1..6).each do |width| %>
-        <% @button_value = "button_#{((height + 11 - 1) * 6) + width}" %>
+        <% # @button_value = "button_#{((height + 11 - 1) * 6) + width - 1}" %>
+        <% @button_value = "button_#{((width * 6) - 6 + 100) + height - 1}" %>
         <% @button_style = "position: absolute; left: #{19.5 + ((width - 1) * 10)}vw; top: #{25 + ((height - 1) * 10)}vh; width: 8vw; height: 2vh;" %>
         <div>
           <%= form_tag(pvp_local_action_path) do %>
@@ -70,7 +71,9 @@
   <div>
     <% (1..5).each do |height| %>
       <% (1..5).each do |width| %>
-        <% @button_value = "button_#{((height + 17 - 1) * 6) + width}" %>
+        <% # @button_value = "button_#{((height + 17 - 1) * 6) + width - height + 100}" %>
+        <% # @button_value = "button_#{((width * 6) - 6 + 100) + (height * 6) - width}" %>
+        <% @button_value = "button_#{((width + 6 - 1) * 6) + height - width + 100}" %>
         <% @button_style = "position: absolute; left: #{28 + ((width - 1) * 10)}vw; top: #{27 + ((height - 1) * 10)}vh; width: 1vw; height: 8vh;" %>
         <div>
           <%= form_tag(pvp_local_action_path) do %>
