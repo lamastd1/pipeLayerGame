@@ -129,10 +129,29 @@ class PvpLocal < ApplicationRecord
             : next) 
           : next)
         : next
-      # elsif board_stack.last.button_no % 6 == 5
-      #   puts 
-      # else 
-      #   puts
+      elsif board_stack.last.button_no % 6 == 5
+        find_piece(current_red, :left, -1, board_stack) == false ? 
+          (find_piece(current_red, :upright, -35, board_stack) == false ? 
+            (find_piece(current_red, :upleft, -36, board_stack) == false ? 
+              (find_piece(current_red, :downright, -29, board_stack) == false ? 
+                (find_piece(current_red, :downleft, -30, board_stack) == false ? board_stack.pop : next)
+              : next) 
+            : next) 
+          : next)
+        : next
+      else 
+        find_piece(current_red, :right, 1, board_stack) == false ? 
+          (find_piece(current_red, :left, -1, board_stack) == false ? 
+            (find_piece(current_red, :upright, -35, board_stack) == false ? 
+              (find_piece(current_red, :upleft, -36, board_stack) == false ? 
+                (find_piece(current_red, :downright, -29, board_stack) == false ? 
+                  (find_piece(current_red, :downleft, -30, board_stack) == false ? board_stack.pop : next)
+                : next) 
+              : next) 
+            : next)
+          : next)
+        : next
+        
       end
       count = count + 1
       if count == 2000
