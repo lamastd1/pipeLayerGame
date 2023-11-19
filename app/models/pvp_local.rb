@@ -36,12 +36,20 @@ class PvpLocal < ApplicationRecord
       return false
     end
     matching_record = color.select do |record| 
+      if record.button_no == 59
+        print("RECORD BUTTON NO: ")
+        puts record[:button_no]
+        print("BOARD STACK: ")
+        puts board_stack.last.button_no
+        print("DIRECTION INT: ")
+        puts direction_int
+        puts
+      end
       record[:button_no] == board_stack.last.button_no + direction_int
     end
     if matching_record.any?
       board_stack.last[direction_col] = true
       board_stack << matching_record[0]
-
       return true
     else
       return false
@@ -70,7 +78,7 @@ class PvpLocal < ApplicationRecord
     end
 
     current_red.each do |record|
-      if record.button_no < 7
+      if record.button_no < 6
         board_stack << record
       end
     end
@@ -78,57 +86,63 @@ class PvpLocal < ApplicationRecord
     count = 0
     while !board_stack.empty? && count < 2000
 
-      if board_stack.last[:button_no] > 30 && board_stack.last[:button_no] < 37
+      # board_stack.each do |bs|
+      #   print(bs.button_no)
+      #   print(" ")
+      # end
+      # puts 
+
+      if board_stack.last[:button_no] > 29 && board_stack.last[:button_no] < 36
         return true 
       end
-      if board_stack.last.button_no < 37 && board_stack.last.button_no % 6 == 1
+      if board_stack.last.button_no < 36 && board_stack.last.button_no % 6 == 0
         find_piece(current_red, :down, 6, board_stack) == false ? 
-          (find_piece(current_red, :downright, 36, board_stack) == false ? board_stack.pop : next)
+          (find_piece(current_red, :downright, (36 - board_stack.last.button_no.div(6)), board_stack) == false ? board_stack.pop : next)
         : next
-      elsif board_stack.last.button_no < 37 && board_stack.last.button_no % 6 == 0
+      elsif board_stack.last.button_no < 36 && board_stack.last.button_no % 6 == 5
         find_piece(current_red, :down, 6, board_stack) == false ? 
-          (find_piece(current_red, :downleft, 35, board_stack) == false ? board_stack.pop : next)
+          (find_piece(current_red, :downleft, (36 - 1 - board_stack.last.button_no.div(6)), board_stack) == false ? board_stack.pop : next)
         : next
-      elsif board_stack.last.button_no < 6
+      elsif board_stack.last.button_no < 5
         find_piece(current_red, :down, 6, board_stack) == false ? 
-          (find_piece(current_red, :downright, 36, board_stack) == false ? 
-            (find_piece(current_red, :downleft, 35, board_stack) == false ? board_stack.pop : next) 
+          (find_piece(current_red, :downright, (36 - board_stack.last.button_no.div(6)), board_stack) == false ? 
+            (find_piece(current_red, :downleft, (36 - 1 - board_stack.last.button_no.div(6)), board_stack) == false ? board_stack.pop : next) 
           : next) 
         : next
-      elsif board_stack.last.button_no < 31
+      elsif board_stack.last.button_no < 30
         find_piece(current_red, :down, 6, board_stack) == false ? 
           (find_piece(current_red, :up, -6, board_stack) == false ? 
-            (find_piece(current_red, :downright, 36, board_stack) == false ? 
-              (find_piece(current_red, :downleft, 35, board_stack) == false ? 
-                (find_piece(current_red, :upright, 30, board_stack) == false ? 
-                  (find_piece(current_red, :upleft, 29, board_stack) == false ? board_stack.pop : next) 
+            (find_piece(current_red, :downright, (36 - board_stack.last.button_no.div(6)), board_stack) == false ? 
+              (find_piece(current_red, :downleft, (36 - 1 - board_stack.last.button_no.div(6)), board_stack) == false ? 
+                (find_piece(current_red, :upright, (31 - board_stack.last.button_no.div(6)), board_stack) == false ? 
+                  (find_piece(current_red, :upleft,(31 - 1 - board_stack.last.button_no.div(6)), board_stack) == false ? board_stack.pop : next) 
                 : next) 
               : next) 
             : next) 
           : next)
         : next
-      elsif board_stack.last.button_no < 37
+      elsif board_stack.last.button_no < 36
         find_piece(current_red, :up, -6, board_stack) == false ? 
-          (find_piece(current_red, :upright, 28, board_stack) == false ? 
-            (find_piece(current_red, :upleft, 27, board_stack) == false ? board_stack.pop : next) 
+          (find_piece(current_red, :upright, (31 - board_stack.last.button_no.div(6)), board_stack) == false ? 
+            (find_piece(current_red, :upleft, (31 - 1 - board_stack.last.button_no.div(6)), board_stack) == false ? board_stack.pop : next) 
           : next) 
         : next 
-      elsif board_stack.last.button_no % 6 == 1
+      elsif (board_stack.last.button_no - 36) % 5 == 0
         find_piece(current_red, :right, 1, board_stack) == false ? 
-          (find_piece(current_red, :upright, -35, board_stack) == false ? 
-            (find_piece(current_red, :upleft, -36, board_stack) == false ? 
-              (find_piece(current_red, :downright, -29, board_stack) == false ? 
-                (find_piece(current_red, :downleft, -30, board_stack) == false ? board_stack.pop : next)
+          (find_piece(current_red, :upright, (-36 + 1 + ((board_stack.last.button_no - 36).div(5))), board_stack) == false ? 
+            (find_piece(current_red, :upleft, (-36 + ((board_stack.last.button_no - 36).div(5))), board_stack) == false ? 
+              (find_piece(current_red, :downright, (-30 + 1 + ((board_stack.last.button_no - 36).div(5))), board_stack) == false ? 
+                (find_piece(current_red, :downleft, (-30 + ((board_stack.last.button_no - 36).div(5))), board_stack) == false ? board_stack.pop : next)
               : next) 
             : next) 
           : next)
         : next
-      elsif board_stack.last.button_no % 6 == 5
+      elsif (board_stack.last.button_no - 36) % 5 == 4
         find_piece(current_red, :left, -1, board_stack) == false ? 
-          (find_piece(current_red, :upright, -35, board_stack) == false ? 
-            (find_piece(current_red, :upleft, -36, board_stack) == false ? 
-              (find_piece(current_red, :downright, -29, board_stack) == false ? 
-                (find_piece(current_red, :downleft, -30, board_stack) == false ? board_stack.pop : next)
+          (find_piece(current_red, :upright, (-36 + 1 + ((board_stack.last.button_no - 36).div(5))), board_stack) == false ? 
+            (find_piece(current_red, :upleft, (-36 + ((board_stack.last.button_no - 36).div(5))), board_stack) == false ? 
+              (find_piece(current_red, :downright, (-30 + 1 + ((board_stack.last.button_no - 36).div(5))), board_stack) == false ? 
+                (find_piece(current_red, :downleft, (-30 + ((board_stack.last.button_no - 36).div(5))), board_stack) == false ? board_stack.pop : next)
               : next) 
             : next) 
           : next)
@@ -136,10 +150,10 @@ class PvpLocal < ApplicationRecord
       else 
         find_piece(current_red, :right, 1, board_stack) == false ? 
           (find_piece(current_red, :left, -1, board_stack) == false ? 
-            (find_piece(current_red, :upright, -35, board_stack) == false ? 
-              (find_piece(current_red, :upleft, -36, board_stack) == false ? 
-                (find_piece(current_red, :downright, -29, board_stack) == false ? 
-                  (find_piece(current_red, :downleft, -30, board_stack) == false ? board_stack.pop : next)
+            (find_piece(current_red, :upright, (-36 + 1 + ((board_stack.last.button_no - 36).div(5))), board_stack) == false ? 
+              (find_piece(current_red, :upleft, (-36 + ((board_stack.last.button_no - 36).div(5))), board_stack) == false ? 
+                (find_piece(current_red, :downright, (-30 + 1 + ((board_stack.last.button_no - 36).div(5))), board_stack) == false ? 
+                  (find_piece(current_red, :downleft, (-30 + ((board_stack.last.button_no - 36).div(5))), board_stack) == false ? board_stack.pop : next)
                 : next) 
               : next) 
             : next)

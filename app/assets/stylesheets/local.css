@@ -1,13 +1,13 @@
 .red-button {
   background-color: red;
-  /* opacity: 0; */
+  opacity: 0;
   transition: visibility 0s 0.3s, opacity 0.3s;
 }
 
 .blue-button {
   background-color: blue;
   display: none;
-  /* opacity: 0; */
+  opacity: 0;
   transition: visibility 0s 0.3s, opacity 0.3s;
 }
 
