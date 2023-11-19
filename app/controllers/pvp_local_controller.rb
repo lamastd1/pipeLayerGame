@@ -41,7 +41,11 @@ class PvpLocalController < ApplicationController
     # Perform any necessary actions with the array
     current_move = PvpLocal.create(button_no: used_val, is_visited: false)
 
-    current_move.determine_winner_red
+    if current_move.determine_winner_red == true
+      puts "game over"
+    else
+      puts "game is not over"
+    end
   
     # Respond to the AJAX request
     respond_to do |format|

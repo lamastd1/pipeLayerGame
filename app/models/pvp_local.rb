@@ -32,12 +32,16 @@ class PvpLocal < ApplicationRecord
 
   def find_piece(color, direction_col, direction_int, board_stack)
 
+    if (board_stack.last[direction_col] == true)
+      return false
+    end
     matching_record = color.select do |record| 
-      record[:button_no] == board_stack.last.button_no + direction_int && record[direction_col] == false
+      record[:button_no] == board_stack.last.button_no + direction_int
     end
     if matching_record.any?
-      matching_record[0][direction_col] = true
+      board_stack.last[direction_col] = true
       board_stack << matching_record[0]
+
       return true
     else
       return false
@@ -72,7 +76,11 @@ class PvpLocal < ApplicationRecord
     end
     
     count = 0
-    while !board_stack.empty? && count < 50
+    while !board_stack.empty? && count < 2000
+
+      if board_stack.last[:button_no] > 30 && board_stack.last[:button_no] < 37
+        return true 
+      end
       # print("BOARD STACK LAST: \n")
       board_stack.each do |num|
         puts num.attributes
@@ -88,38 +96,50 @@ class PvpLocal < ApplicationRecord
       
       # puts board_stack.last.button_no
       if board_stack.last.button_no < 7
-        if find_piece(current_red, :down, 6, board_stack) == false
-          if find_piece(current_red, :downright, 36, board_stack) == false
-            if find_piece(current_red, :downleft, 35, board_stack) == false
-              board_stack.pop
-            else 
-              next
-            end
-          else
-            next
-          end
-        else
-          next
-        end
+        find_piece(current_red, :down, 6, board_stack) == false ? 
+          (find_piece(current_red, :downright, 36, board_stack) == false ? 
+            (find_piece(current_red, :downleft, 35, board_stack) == false ? board_stack.pop : next) 
+          : next) 
+        : next
       elsif board_stack.last.button_no < 31
-        # find_piece(current_red, :down, 6, board_stack)
-        if find_piece(current_red, :up, -6, board_stack) == false
-          board_stack.pop
-        end
-        # find_piece(current_red, :downright, 36, board_stack)
-        # find_piece(current_red, :downleft, 35, board_stack)
-        # find_piece(current_red, :upright, 28, board_stack)
-        # find_piece(current_red, :upleft, 27, board_stack)
-      else 
-        find_piece(current_red, :up, -6, board_stack)
-        find_piece(current_red, :upright, 28, board_stack)
-        find_piece(current_red, :upleft, 27, board_stack)
+        find_piece(current_red, :down, 6, board_stack) == false ? 
+          (find_piece(current_red, :up, -6, board_stack) == false ? 
+            (find_piece(current_red, :downright, 36, board_stack) == false ? 
+              (find_piece(current_red, :downleft, 35, board_stack) == false ? 
+                (find_piece(current_red, :upright, 30, board_stack) == false ? 
+                  (find_piece(current_red, :upleft, 29, board_stack) == false ? board_stack.pop : next) 
+                : next) 
+              : next) 
+            : next) 
+          : next)
+        : next
+      elsif board_stack.last.button_no < 37
+        find_piece(current_red, :up, -6, board_stack) == false ? 
+          (find_piece(current_red, :upright, 28, board_stack) == false ? 
+            (find_piece(current_red, :upleft, 27, board_stack) == false ? board_stack.pop : next) 
+          : next) 
+        : next 
+      elsif board_stack.last.button_no % 6 == 1
+        find_piece(current_red, :right, 1, board_stack) == false ? 
+          (find_piece(current_red, :upright, -35, board_stack) == false ? 
+            (find_piece(current_red, :upleft, -36, board_stack) == false ? 
+              (find_piece(current_red, :downright, -29, board_stack) == false ? 
+                (find_piece(current_red, :downleft, -30, board_stack) == false ? board_stack.pop : next)
+              : next) 
+            : next) 
+          : next)
+        : next
+      # elsif board_stack.last.button_no % 6 == 5
+      #   puts 
+      # else 
+      #   puts
       end
       count = count + 1
-      if count == 50
+      if count == 2000
         puts "COUNT EXCEEDED"
       end
     end
+    return false
       # if ((board_stack.last + 1).in?(current_red)) && !((board_stack.last + 1).in?(board_stack)) 
       #   board_stack << board_stack.last + 1
       # elsif (board_stack.last + 6).in?(current_red)
