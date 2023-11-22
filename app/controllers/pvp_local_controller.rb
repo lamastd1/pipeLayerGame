@@ -41,8 +41,11 @@ class PvpLocalController < ApplicationController
     # Perform any necessary actions with the array
     current_move = PvpLocal.create(button_no: used_val, is_visited: false)
 
-    if current_move.determine_winner_red == true
-      puts "game over"
+    result = current_move.determine_winner
+    if result == "red"
+      puts "red wins"
+    elsif result == "blue"
+      puts "blue wins"
     else
       puts "game is not over"
     end
