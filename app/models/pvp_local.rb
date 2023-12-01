@@ -205,11 +205,11 @@ class PvpLocal < ApplicationRecord
     # puts 
 
     if check_board(red_stack, current_red, 0)
-      return "red"
+      return 1
     elsif check_board(blue_stack, current_blue, 100)
-      return "blue"
+      return 2
     else
-      return "none"
+      return 0
     end
 
     red_stack = []
