@@ -41,12 +41,12 @@ class PvpLocalController < ApplicationController
     # Perform any necessary actions with the array
     current_move = PvpLocal.create(button_no: used_val, is_visited: false)
 
-    result = `python3 #{Rails.root}/app/python/ai.py #{PvpLocal.pluck(:button_no).join(' ')}` 
+    # result = `python3 #{Rails.root}/app/python/ai.py #{PvpLocal.pluck(:button_no).join(' ')}` 
     # result =  result + (PvpLocal.pluck(:button_no).each{ |item| " " + item.to_s) }).to_s
-    puts result
-    puts "Result from Python script:\n#{result}"
+    # puts result
+    # puts "Result from Python script:\n#{result}"
 
-    @game_result = current_move.determine_winner
+    @game_result2 = current_move.determine_winner
     if @game_result2 == 1
       puts "red wins"
     elsif @game_result2 == 2
