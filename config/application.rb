@@ -1,5 +1,5 @@
 require_relative "boot"
-
+require "action_cable/engine"
 require "rails/all"
 
 # Require the gems listed in Gemfile, including any gems
@@ -16,6 +16,7 @@ module PipeLayer
     # Common ones are `templates`, `generators`, or `middleware`, for example.
     config.autoload_lib(ignore: %w(assets tasks))
     config.middleware.use ActionDispatch::Session::CookieStore
+    # config.middleware.use ActionCable::Middleware
 
     # Configuration for the application, engines, and railties goes here.
     #

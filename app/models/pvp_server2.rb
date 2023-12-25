@@ -1,0 +1,2 @@
+class PvpServer < ApplicationRecord
+end

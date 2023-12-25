@@ -10,9 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_11_18_220440) do
+ActiveRecord::Schema[7.1].define(version: 2023_12_24_214230) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "pvp_clients", force: :cascade do |t|
+    t.string "password"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "pvp_local", primary_key: "button_no", id: :integer, default: nil, force: :cascade do |t|
     t.boolean "is_visited", default: false
@@ -24,6 +30,12 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_18_220440) do
     t.boolean "downleft", default: false
     t.boolean "right", default: false
     t.boolean "left", default: false
+  end
+
+  create_table "pvp_servers", force: :cascade do |t|
+    t.string "password"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
 end

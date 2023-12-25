@@ -1,10 +1,16 @@
 <h1>PvpOnline#index</h1>
 <p>Find me in app/views/pvp_online/index.html.erb</p>
 <p> hello <p>
-<%= form_tag(process_button_click_path, class: 'form-1') do %>
-  <%= submit_tag('', class: 'button-1') %>
-<% end %>
+<h1>Socket Programming Demo</h1>
+<%= button_to 'Start Socket Server with path', start_socket_path, method: :post %>
 
-<%= form_tag(process_button_click_two_path, class: 'form-2') do %>
-  <%= submit_tag('', class: 'button-2') %>
+<%= button_to 'Start Socket Server', method: :post %>
+
+<% if @messages.any? %>
+  <h2>Received Messages:</h2>
+  <ul>
+    <% @messages.each do |message| %>
+      <li><%= message %></li>
+    <% end %>
+  </ul>
 <% end %>

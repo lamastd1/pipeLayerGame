@@ -1,10 +1,23 @@
-class PvpOnlineController < ApplicationController
+class PvpServerController < ApplicationController
   before_action :initialize_messages
 
   def index
   end
 
-  def start_socket
+  def new
+    @pvp_server = PvpServer.new
+  end
+
+  def create
+    @pvp_server = PvpServer.new(post_params)
+    if @pvp_server.save
+      redirect_to @pvp_server, notice: 'Post was successfully created.'
+    else
+      render :new
+    end
+  end
+
+  def start_server
     Thread.new do
       server = TCPServer.new(2000)
       loop do
@@ -28,12 +41,16 @@ class PvpOnlineController < ApplicationController
       end
     end
 
-    redirect_to root_path, notice: 'Socket server started!'
+    # redirect_to root_path, notice: 'Socket server started!'
   end
 
   private
 
   def initialize_messages
     @messages = []
+  end
+
+  def post_params
+    params.require(:post).permit(:title, :body)
   end
 end

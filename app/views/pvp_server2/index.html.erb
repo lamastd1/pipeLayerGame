@@ -1,0 +1,39 @@
+<h1>PvpServer#index</h1>
+<p>Find me in app/views/pvp_server/index.html.erb</p>
+<p> hello from pvp server<p>
+<h1>Socket Programming Demo</h1>
+<%= button_to 'Start Socket Server with path', start_socket_server_path, method: :post %>
+
+<%= button_to 'Start Socket Server', method: :post %>
+
+<% if @messages.any? %>
+  <h2>Received Messages:</h2>
+  <ul>
+    <% @messages.each do |message| %>
+      <li><%= message %></li>
+    <% end %>
+  </ul>
+<% end %>
+
+<%= form_for @pvp_server do |f| %>
+  <% if @pvp_server.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@post.errors.count, "error") %> prohibited this post from being saved:</h2>
+
+      <ul>
+        <% @@pvp_server.errors.full_messages.each do |m| %>
+          <li><%= m %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :password %>
+    <%= f.text_field :password %>
+  </div>
+  
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

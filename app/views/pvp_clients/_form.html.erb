@@ -1,0 +1,22 @@
+<%= form_with(model: @pvp_client, local: true) do |form| %>
+  <% if @pvp_client.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@pvp_client.errors.count, "error") %> did not work bro:</h2>
+
+      <ul>
+        <% @pvp_client.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :password %>
+    <%= form.text_field :password %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
